@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Powodzenia!</title>
+</head>
+<body>
+<H2>Odpowiedz na pytanie :</H2>
+<p th:text="${question}"/>
+
+<button name="subject" type="submit" value="sad"><button> <h3 th:text="${rightAnswer}" > </h3    ></button></button>
+<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer1}" > </h3    ></button></button>
+<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer2}" > </h3    ></button></button>
+<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer3}" > </h3    ></button></button>
+
+
+<form action="/">
+    <input type="submit" value="Wyjście">
+</form>
+</body>
+</html>
