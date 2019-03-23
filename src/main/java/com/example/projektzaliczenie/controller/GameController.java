@@ -1,28 +1,33 @@
 package com.example.projektzaliczenie.controller;
 
 
-import com.example.projektzaliczenie.model.game.Game;
+import com.example.projektzaliczenie.model.methods.Checker;
 import com.example.projektzaliczenie.model.questions.Generator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GameController {
 
+    @Autowired
     Generator generator = new Generator();
+    @Autowired
+    Checker checker = new Checker();
 
-
+    int counter = 0;
 
     @GetMapping("/")
-    public String getParam(){
-    return "index";
+    public String getParam(ModelMap modelMap) {
+        counter = 0;
+        modelMap.put("counter", counter);
+        return "index";
     }
 
     @GetMapping("/play")
-    public String getQuestion(ModelMap modelMap){
+    public String getQuestion(ModelMap modelMap) {
         String question = generator.generateQuestion();
         String rightAnswer = generator.getRightAnswer();
         String wrongAnswer1 = generator.getWrongAnswer1();
@@ -33,36 +38,32 @@ public class GameController {
         modelMap.put("wrongAnswer1", wrongAnswer1);
         modelMap.put("wrongAnswer2", wrongAnswer2);
         modelMap.put("wrongAnswer3", wrongAnswer3);
+        modelMap.put("counter", counter);
         return "play";
     }
 
 
+    @GetMapping("/result")
+    public String getResultR(@RequestParam String answer,
+                            ModelMap modelMap) {
+        String rightAnswer = generator.getRightAnswer();
 
-    @GetMapping("/a")
-    public String getPageA() {
-        return "a";
-    }
-    @GetMapping("/b")
-    public String getPageB(){
-        return "b";
-    }
-    @GetMapping("/c")
-    public String getPageC(){
-        return "c";
-    }
-
-    @GetMapping("/d")
-    public String GetPageD(){
-        return "d";
-    }
-
-
-
-
-
-
+        String effect = "";
+        if (answer.equals(rightAnswer)) {
+            effect = "sd";
+            modelMap.put("good", effect);
+            modelMap.put("counter", counter);
+            counter++;
+            return "good";
+        }else if (!answer.equals(rightAnswer)){
+            modelMap.put("wrong", effect);
+            modelMap.put("counter", counter);
+            counter--;
+        }return "wrong";
 
     }
+
+}
 
 
 

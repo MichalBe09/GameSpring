@@ -3,12 +3,13 @@ package com.example.projektzaliczenie.model.questions;
 import com.example.projektzaliczenie.model.communicates.Communicates;
 import com.example.projektzaliczenie.model.questions.questions_constructors.Question;
 import com.example.projektzaliczenie.model.questions.questions_db.QuestionsDB;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
+@Component
 public class Generator {
 
 

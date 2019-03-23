@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+
+    <style>
+        input[type=text] {
+            width: 10%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid darkslateblue;
+            border-radius: 4px;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Powodzenia!</title>
 </head>
-<body>
-<H2>Odpowiedz na pytanie :</H2>
-<p th:text="${question}"/>
+<body background="https://wallpaperplay.com/walls/full/8/c/2/12870.jpg">
+<div style="text-align: center;vertical-align: center;padding-top:150px;">
+<h1 style="color:#cc9900";>Odpowiedz na pytanie :</h1>
+<H3><p style="color:#ff9933"; th:text="${question}"/></H3>
 
-<button name="subject" type="submit" value="sad"><button> <h3 th:text="${rightAnswer}" > </h3    ></button></button>
-<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer1}" > </h3    ></button></button>
-<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer2}" > </h3    ></button></button>
-<button name="subject" type="submit" value="sad"><button> <h3 th:text="${wrongAnswer3}" > </h3    ></button></button>
+
+<button type="submit" name="button"><h3 th:text="${rightAnswer}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer1}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer2}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer3}"></h3></button>
+
+    <form action="/result">
+    <label style="color:#ff9933";>Podaj odpowiedź:</label>
+    <input type="text" name="answer">
+    <input type="submit" value="Wyślij">
+</form>
+
+    <font size="3" style="color:#ccffcc";> Twoje punkty: <p th:text="${counter}"/> </font>
 
 
 <form action="/">
     <input type="submit" value="Wyjście">
 </form>
+</div>
 </body>
 </html>

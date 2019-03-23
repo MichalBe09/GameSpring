@@ -1,9 +1,10 @@
 package com.example.projektzaliczenie.model.methods;
 
 import com.example.projektzaliczenie.model.communicates.Communicates;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
-
+@Component
 public class Checker {
     int counter = 1;
     int lifebuoy = 0;
