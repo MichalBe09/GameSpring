@@ -9,6 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Random;
+
 @Controller
 public class GameController {
 
@@ -47,18 +49,23 @@ public class GameController {
     public String getResultR(@RequestParam String answer,
                             ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
-
+        Random random = new Random();
+        int r = random.nextInt(2);
         String effect = "";
-        if (answer.equals(rightAnswer)) {
+         if (answer.equals(rightAnswer)) {
             effect = "sd";
             modelMap.put("good", effect);
             modelMap.put("counter", counter);
+            modelMap.put("r", r);
             counter++;
             return "good";
         }else if (!answer.equals(rightAnswer)){
             modelMap.put("wrong", effect);
             modelMap.put("counter", counter);
             counter--;
+            if (counter == 0){
+                return "lost";
+            }
         }return "wrong";
 
     }
