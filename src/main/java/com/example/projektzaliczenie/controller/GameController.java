@@ -48,11 +48,21 @@ public class GameController {
     @GetMapping("/result")
     public String getResultR(@RequestParam String answer,
                             ModelMap modelMap) {
+        String wrongAnswer1 = generator.getWrongAnswer1();
+        String wrongAnswer2 = generator.getWrongAnswer2();
+        String wrongAnswer3 = generator.getWrongAnswer3();
         String rightAnswer = generator.getRightAnswer();
         Random random = new Random();
         int r = random.nextInt(2);
         String effect = "";
-         if (answer.equals(rightAnswer)) {
+        if (answer.equals(rightAnswer) && r == 1){
+            modelMap.put("rightAnswer", rightAnswer);
+            modelMap.put("wrongAnswer1", wrongAnswer1);
+            modelMap.put("wrongAnswer2", wrongAnswer2);
+            modelMap.put("wrongAnswer3", wrongAnswer3);
+            return "ausure";
+        }
+        else if (answer.equals(rightAnswer)) {
             effect = "sd";
             modelMap.put("good", effect);
             modelMap.put("counter", counter);
@@ -68,6 +78,28 @@ public class GameController {
             }
         }return "wrong";
 
+    }
+
+    @GetMapping("/sure")
+    public String getSure(@RequestParam String answer,
+                             ModelMap modelMap){
+        String rightAnswer = generator.getRightAnswer();
+        if (answer.equals(rightAnswer)) {
+            String effect="";
+            effect = "sur";
+            modelMap.put("good", effect);
+            modelMap.put("counter", counter);
+            counter++;
+            return "good";
+        }else if (!answer.equals(rightAnswer)){
+            String effect="wr";
+            modelMap.put("secondw", effect);
+            modelMap.put("counter", counter);
+            counter--;
+            if (counter == 0){
+                return "lost";
+            }
+        }return "secondw";
     }
 
 }

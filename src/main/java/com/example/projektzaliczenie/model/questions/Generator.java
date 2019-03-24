@@ -49,6 +49,7 @@ public class Generator {
         return quest;
     }
 
+
     public String getRightAnswer() {
         return rightAnswer;
     }

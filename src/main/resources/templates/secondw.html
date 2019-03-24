@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Zła odpowiedź !</title>
+</head>
+<style>
+    body {
+        background-image: url("http://images6.fanpop.com/image/photos/38300000/Dawn-Facepalm-dawn-38302341-1937-1200.png");
+        background-repeat: no-repeat;
+        background-position: 0px -30px;
+    }
+</style>
+<div style="text-align: center;vertical-align: center;padding-top:150px;">
+    <body>
+<h1 style="color:#1180f4" ;>Dałeś się podpuścić! Tracisz punkt!</h1>
+<form action="/play">
+    <button type="submit" name="play"><h3>Następne pytanie</h3></button>
+    <h3 th:text="${r}"></h3>
+</form>
+
+</body>
+</div>
+</html>

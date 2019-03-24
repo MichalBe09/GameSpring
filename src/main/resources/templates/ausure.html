@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        input[type=text] {
+            width: 10%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid darkslateblue;
+            border-radius: 4px;
+        }
+        body {
+            background-image: url("https://wallpapercave.com/wp/wp3103196.jpg");
+            background-repeat: no-repeat;
+            background-position: 0px -30px;
+        }
+    </style>
+</head>
+<div style="text-align: center;vertical-align: center;padding-top:150px;">
+
+
+<body>
+<h1 style="color:#f41b16" ;>Jesteś pewny ?</h1>
+<button type="submit" name="button"><h3 th:text="${rightAnswer}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer1}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer2}"></h3></button>
+<button type="submit" name="button"><h3 th:text="${wrongAnswer3}"></h3></button>
+
+<form action="/sure">
+    <font size="4" style="color:#ff0e09" ;> Podaj odpowiedź:</font>
+    <input type="text" name="answer">
+    <input type="submit" value="Wyślij">
+</form>
+</body>
+
+</div>
+</html>
