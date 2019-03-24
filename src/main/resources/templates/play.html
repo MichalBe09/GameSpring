@@ -12,12 +12,13 @@
             border-radius: 4px;
         }
     </style>
+
     <meta charset="UTF-8">
     <title>Powodzenia!</title>
 </head>
 <body background="https://wallpaperplay.com/walls/full/8/c/2/12870.jpg">
 <div style="text-align: center;vertical-align: center;padding-top:150px;">
-<h1 style="color:#cc9900";>Odpowiedz na pytanie :</h1>
+<h1 style="color:#7bff1b" ;>Odpowiedz na pytanie :</h1>
 <H3><p style="color:#ff9933"; th:text="${question}"/></H3>
 
 <button type="submit" name="button"><h3 th:text="${rightAnswer}"></h3></button>
@@ -25,10 +26,14 @@
 <button type="submit" name="button"><h3 th:text="${wrongAnswer2}"></h3></button>
 <button type="submit" name="button"><h3 th:text="${wrongAnswer3}"></h3></button>
 
+     <form action="/lifebuoy">
+        <button type="submit" name="lifebuoy"><h3>50/50</h3></button>
+    </form>
+
     <form action="/result">
     <label style="color:#ff9933";>Podaj odpowiedź:</label>
     <input type="text" name="answer">
-    <input type="submit" value="Wyślij">
+    <input type="submit" value="Odpowiedz">
 </form>
 
     <font size="3" style="color:#ccffcc";> Twoje punkty: <p th:text="${counter}"/> </font>

@@ -20,10 +20,12 @@ public class GameController {
     Checker checker = new Checker();
 
     int counter = 0;
+    int lifebuoy = 0;
 
     @GetMapping("/")
     public String getParam(ModelMap modelMap) {
         counter = 0;
+        lifebuoy = 0;
         modelMap.put("counter", counter);
         return "index";
     }
@@ -47,63 +49,102 @@ public class GameController {
 
     @GetMapping("/result")
     public String getResultR(@RequestParam String answer,
-                            ModelMap modelMap) {
+                             ModelMap modelMap) {
         String wrongAnswer1 = generator.getWrongAnswer1();
         String wrongAnswer2 = generator.getWrongAnswer2();
         String wrongAnswer3 = generator.getWrongAnswer3();
         String rightAnswer = generator.getRightAnswer();
         Random random = new Random();
-        int r = random.nextInt(2);
+        int r = random.nextInt(10000);
         String effect = "";
-        if (answer.equals(rightAnswer) && r == 1){
+        if (answer.equals(rightAnswer) && r % 7 == 0) {
             modelMap.put("rightAnswer", rightAnswer);
             modelMap.put("wrongAnswer1", wrongAnswer1);
             modelMap.put("wrongAnswer2", wrongAnswer2);
             modelMap.put("wrongAnswer3", wrongAnswer3);
             return "ausure";
-        }
-        else if (answer.equals(rightAnswer)) {
+        } else if (!answer.equals(rightAnswer) && r % 7 == 0) {
+            modelMap.put("rightAnswer", rightAnswer);
+            modelMap.put("wrongAnswer1", wrongAnswer1);
+            modelMap.put("wrongAnswer2", wrongAnswer2);
+            modelMap.put("wrongAnswer3", wrongAnswer3);
+            return "ausurew";
+        } else if (answer.equals(rightAnswer)) {
             effect = "sd";
             modelMap.put("good", effect);
             modelMap.put("counter", counter);
             modelMap.put("r", r);
             counter++;
             return "good";
-        }else if (!answer.equals(rightAnswer)){
+        } else if (!answer.equals(rightAnswer)) {
             modelMap.put("wrong", effect);
             modelMap.put("counter", counter);
             counter--;
-            if (counter == 0){
+            if (counter == 0) {
                 return "lost";
             }
-        }return "wrong";
+        }
+        return "wrong";
 
     }
 
     @GetMapping("/sure")
     public String getSure(@RequestParam String answer,
-                             ModelMap modelMap){
+                          ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
         if (answer.equals(rightAnswer)) {
-            String effect="";
+            String effect = "";
             effect = "sur";
             modelMap.put("good", effect);
             modelMap.put("counter", counter);
             counter++;
             return "good";
-        }else if (!answer.equals(rightAnswer)){
-            String effect="wr";
+        } else if (!answer.equals(rightAnswer)) {
+            String effect = "wr";
             modelMap.put("secondw", effect);
             modelMap.put("counter", counter);
+            counter--;
+            if (counter == 0) {
+                return "lost";
+            }
+        }
+        return "secondw";
+    }
+
+    @GetMapping("/surew")
+    public String getSurew(@RequestParam String answer,
+                           ModelMap modelMap) {
+        String rightAnswer = generator.getRightAnswer();
+        if (answer.equals(rightAnswer)) {
+            return "secondr";
+        } else if (!answer.equals(rightAnswer)) {
+            modelMap.put("counter", counter);
+            counter--;
+            if (counter == 0) {
+                return "lost";
+            }
+        }
+        return "wrong";
+    }
+
+    @GetMapping("/lifebuoy")
+    public String getLife(ModelMap modelMap){
+        String rightAnswer = generator.getRightAnswer();
+        String wrongAnswer2 = generator.getWrongAnswer2();
+        modelMap.put("lifebuoy", lifebuoy);
+        modelMap.put("rightAnswer", rightAnswer);
+        modelMap.put("wrongAnswer2", wrongAnswer2);
+        if (lifebuoy < 3){
+            lifebuoy++;
+            return "lifebuoy";
+        }else if (lifebuoy > 3){
             counter--;
             if (counter == 0){
                 return "lost";
             }
-        }return "secondw";
+        }return "nobuoys";
     }
-
 }
-
 
 
 
