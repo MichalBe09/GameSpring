@@ -3,6 +3,7 @@ package com.example.projektzaliczenie.controller;
 
 import com.example.projektzaliczenie.model.methods.Checker;
 import com.example.projektzaliczenie.model.questions.Generator;
+import com.example.projektzaliczenie.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,13 +20,15 @@ public class GameController {
     @Autowired
     Checker checker = new Checker();
 
-    int counter = 0;
-    int lifebuoy = 0;
+    @Autowired
+    GameService gameService = new GameService();
+    Random random = new Random();
+    private int counter = 0;
 
     @GetMapping("/")
     public String getParam(ModelMap modelMap) {
         counter = 0;
-        lifebuoy = 0;
+        gameService.setLifebuoy(0);
         modelMap.put("counter", counter);
         return "index";
     }
@@ -50,94 +53,77 @@ public class GameController {
     @GetMapping("/result")
     public String getResultR(@RequestParam String answer,
                              ModelMap modelMap) {
+        String rightAnswer = generator.getRightAnswer();
+        modelMap.put("rightAnswer",rightAnswer);
         String wrongAnswer1 = generator.getWrongAnswer1();
         String wrongAnswer2 = generator.getWrongAnswer2();
         String wrongAnswer3 = generator.getWrongAnswer3();
-        String rightAnswer = generator.getRightAnswer();
-        Random random = new Random();
-        int r = random.nextInt(10000);
-        String effect = "";
-        if (answer.equals(rightAnswer) && r % 7 == 0) {
-            modelMap.put("rightAnswer", rightAnswer);
-            modelMap.put("wrongAnswer1", wrongAnswer1);
-            modelMap.put("wrongAnswer2", wrongAnswer2);
-            modelMap.put("wrongAnswer3", wrongAnswer3);
+        modelMap.put("wrongAnswer1",wrongAnswer1);
+        modelMap.put("wrongAnswer2",wrongAnswer2);
+        modelMap.put("wrongAnswer3",wrongAnswer3);
+
+        int r = random.nextInt(1000);
+        if (gameService.rightMod(answer,rightAnswer,r)){
             return "ausure";
-        } else if (!answer.equals(rightAnswer) && r % 7 == 0) {
-            modelMap.put("rightAnswer", rightAnswer);
-            modelMap.put("wrongAnswer1", wrongAnswer1);
-            modelMap.put("wrongAnswer2", wrongAnswer2);
-            modelMap.put("wrongAnswer3", wrongAnswer3);
-            return "ausurew";
-        } else if (answer.equals(rightAnswer)) {
-            effect = "sd";
-            modelMap.put("good", effect);
-            modelMap.put("counter", counter);
-            modelMap.put("r", r);
+        }
+        else if (gameService.right(answer, rightAnswer))  {
             counter++;
             return "good";
-        } else if (!answer.equals(rightAnswer)) {
-            modelMap.put("wrong", effect);
-            modelMap.put("counter", counter);
+        } else if (gameService.wrongMod(answer,rightAnswer,r)){
+            return "ausurew";
+        } else {
             counter--;
-            if (counter == 0) {
+            if (counter ==0){
                 return "lost";
             }
-        }
-        return "wrong";
-
+        }return "wrong";
     }
+
+
+
+
+
 
     @GetMapping("/sure")
     public String getSure(@RequestParam String answer,
                           ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
-        if (answer.equals(rightAnswer)) {
-            String effect = "";
-            effect = "sur";
-            modelMap.put("good", effect);
-            modelMap.put("counter", counter);
+        if (gameService.right(answer, rightAnswer)) {
             counter++;
             return "good";
-        } else if (!answer.equals(rightAnswer)) {
-            String effect = "wr";
-            modelMap.put("secondw", effect);
-            modelMap.put("counter", counter);
+        }else {
             counter--;
-            if (counter == 0) {
+            if (counter == 0){
                 return "lost";
             }
-        }
-        return "secondw";
+        }return "secondw";
     }
+
 
     @GetMapping("/surew")
     public String getSurew(@RequestParam String answer,
                            ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
-        if (answer.equals(rightAnswer)) {
+        if (gameService.right(answer, rightAnswer)) {
             return "secondr";
-        } else if (!answer.equals(rightAnswer)) {
-            modelMap.put("counter", counter);
+        } else {
             counter--;
             if (counter == 0) {
                 return "lost";
             }
-        }
-        return "wrong";
+        }return "wrong";
     }
 
     @GetMapping("/lifebuoy")
     public String getLife(ModelMap modelMap){
         String rightAnswer = generator.getRightAnswer();
         String wrongAnswer2 = generator.getWrongAnswer2();
-        modelMap.put("lifebuoy", lifebuoy);
+        modelMap.put("lifebuoy", gameService.getLifebuoy());
         modelMap.put("rightAnswer", rightAnswer);
         modelMap.put("wrongAnswer2", wrongAnswer2);
-        if (lifebuoy < 3){
-            lifebuoy++;
+        if (gameService.getLife()){
             return "lifebuoy";
-        }else if (lifebuoy > 3){
+        }else {
             counter--;
             if (counter == 0){
                 return "lost";

@@ -72,24 +72,24 @@ public class Checker {
 
     public int right(String answer, String rightAnswer) {
 
-        if (answer.equals(rightAnswer)) {
-            counter++;
-            System.out.println(communicates.right + (counter - 1));
-        } else {
-            counter--;
-            System.out.println(communicates.wrong + (counter - 1));
-            if (counter ==0){
-                System.out.println(communicates.lost);
-            }
-            if (counter == 1) {
+            if (answer.equals(rightAnswer)) {
+                counter++;
+                System.out.println(communicates.right + (counter - 1));
+            } else {
                 counter--;
-                if (counter <= 0) {
+                System.out.println(communicates.wrong + (counter - 1));
+                if (counter ==0){
                     System.out.println(communicates.lost);
-                } else {
-                    System.out.println(communicates.wrong + (counter - 1));
+                }
+                if (counter == 1) {
+                    counter--;
+                    if (counter <= 0) {
+                        System.out.println(communicates.lost);
+                    } else {
+                        System.out.println(communicates.wrong + (counter - 1));
+                    }
                 }
             }
-        }
         return counter;
     }
 
