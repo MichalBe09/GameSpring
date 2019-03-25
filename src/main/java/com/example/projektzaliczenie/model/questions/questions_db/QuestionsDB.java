@@ -5,8 +5,10 @@ import com.example.projektzaliczenie.model.questions.questions_constructors.Ques
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class QuestionsDB {
+    Properties properties = new Properties();
 
     Map<Integer, Question> questionsDb = new HashMap<>();
 
@@ -22,9 +24,8 @@ public class QuestionsDB {
         this.questionsDb = questionsDb;
     }
 
-    // STWÓRZ METODĘ WYCIĄGAJĄCĄ KLUCZ PYTANIA, ABY NASTĘPNIE MÓC USUWAĆ PYTANIE PO JEGO WYGENEROWANIU
 
-    public void addStartDataBase() { // tu znajdują się wszystkie pytania z propozycjami odpowiedzi, wciąż w budowie
+    public void addStartDataBase() {
 
         questionsDb.put(0, new Question("Jaka część mowy odpowiada na pytania: kto, co?", "Rzeczownik", new Answers("Czasownik", "Przymiotnik", "Przyimek")));
         questionsDb.put(1, new Question("Co powstanie z wody, gdy ją zamrozimy?", "Lód", new Answers("Para", "Kryształy", "Żywica")));

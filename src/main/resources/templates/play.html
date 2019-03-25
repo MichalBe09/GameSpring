@@ -21,13 +21,15 @@
 <h1 style="color:#7bff1b" ;>Odpowiedz na pytanie :</h1>
 <H3><p style="color:#ff9933"; th:text="${question}"/></H3>
 
-    
-<button type="submit" name="button"><h3 th:text="${rightAnswer}"></h3></button>
-<button type="submit" name="button"><h3 th:text="${wrongAnswer1}"></h3></button>
-<button type="submit" name="button"><h3 th:text="${wrongAnswer2}"></h3></button>
-<button type="submit" name="button"><h3 th:text="${wrongAnswer3}"></h3></button>
+   <form action="/result">
+<button type="submit" name="action" value="1"/><h3 th:text="${rightAnswer}"></h3></button>
+<button type="submit" name="action" value="2"/><h3 th:text="${wrongAnswer1}"></h3></button>
+<button type="submit" name="action" value="3"/><h3 th:text="${wrongAnswer2}"></h3></button>
+<button type="submit" name="action" value="4"/><h3 th:text="${wrongAnswer3}"></h3></button>
+   </form>
 
-     <form action="/lifebuoy">
+    <br>
+    <form action="/lifebuoy">
         <button type="submit" name="lifebuoy"><h3>50/50</h3></button>
     </form>
 

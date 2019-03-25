@@ -1,6 +1,5 @@
 package com.example.projektzaliczenie.model.questions;
 
-import com.example.projektzaliczenie.model.communicates.Communicates;
 import com.example.projektzaliczenie.model.questions.questions_constructors.Question;
 import com.example.projektzaliczenie.model.questions.questions_db.QuestionsDB;
 import org.springframework.stereotype.Component;
@@ -9,27 +8,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
 @Component
 public class Generator {
 
 
-    String rightAnswer;
-    String wrongAnswer1;
-    String wrongAnswer2;
-    String wrongAnswer3;
+    private String rightAnswer;
+    private String wrongAnswer1;
+    private String wrongAnswer2;
+    private String wrongAnswer3;
 
     QuestionsDB questionsDB = new QuestionsDB();
     Random random = new Random();
-    Communicates communicates = new Communicates();
 
 
-
-
-
-
-
-    public String  generateQuestion () {
-        System.out.println(communicates.answerPlease);
+    public String generateQuestion() {
         Question question = questionsDB.getQuestionsDb().get(random.nextInt(questionsDB.getQuestionsDb().size()));      // pobieranie losowego indeksu z QuestionsDB
         String quest = question.getQuestion();         // pobieranie pytania z wylosowanego indeksu
         rightAnswer = question.getAnswer();      // pobieranie prawidlowej odpowiedzi z wylosowanego indeksu
@@ -43,7 +36,7 @@ public class Generator {
         answers.add(wrongAnswer3);
         Collections.shuffle(answers);       // tasowanie możliwości odpowiedzi
         System.out.println(quest);          // drukowanie pytania
-        for (String answerss : answers){
+        for (String answerss : answers) {
             System.out.println(answerss);   // drukowanie odpowiedzi
         }
         return quest;
@@ -96,14 +89,6 @@ public class Generator {
 
     public void setRandom(Random random) {
         this.random = random;
-    }
-
-    public Communicates getCommunicates() {
-        return communicates;
-    }
-
-    public void setCommunicates(Communicates communicates) {
-        this.communicates = communicates;
     }
 
 

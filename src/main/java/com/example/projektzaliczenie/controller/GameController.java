@@ -1,7 +1,6 @@
 package com.example.projektzaliczenie.controller;
 
 
-import com.example.projektzaliczenie.model.methods.Checker;
 import com.example.projektzaliczenie.model.questions.Generator;
 import com.example.projektzaliczenie.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ public class GameController {
 
     @Autowired
     Generator generator = new Generator();
-    @Autowired
-    Checker checker = new Checker();
 
     @Autowired
     GameService gameService = new GameService();
@@ -54,34 +51,30 @@ public class GameController {
     public String getResultR(@RequestParam String answer,
                              ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
-        modelMap.put("rightAnswer",rightAnswer);
+        modelMap.put("rightAnswer", rightAnswer);
         String wrongAnswer1 = generator.getWrongAnswer1();
         String wrongAnswer2 = generator.getWrongAnswer2();
         String wrongAnswer3 = generator.getWrongAnswer3();
-        modelMap.put("wrongAnswer1",wrongAnswer1);
-        modelMap.put("wrongAnswer2",wrongAnswer2);
-        modelMap.put("wrongAnswer3",wrongAnswer3);
+        modelMap.put("wrongAnswer1", wrongAnswer1);
+        modelMap.put("wrongAnswer2", wrongAnswer2);
+        modelMap.put("wrongAnswer3", wrongAnswer3);
 
         int r = random.nextInt(1000);
-        if (gameService.rightMod(answer,rightAnswer,r)){
+        if (gameService.rightMod(answer, rightAnswer, r)) {
             return "ausure";
-        }
-        else if (gameService.right(answer, rightAnswer))  {
+        } else if (gameService.right(answer, rightAnswer)) {
             counter++;
             return "good";
-        } else if (gameService.wrongMod(answer,rightAnswer,r)){
+        } else if (gameService.wrongMod(answer, rightAnswer, r)) {
             return "ausurew";
         } else {
             counter--;
-            if (counter ==0){
+            if (counter == 0) {
                 return "lost";
             }
-        }return "wrong";
+        }
+        return "wrong";
     }
-
-
-
-
 
 
     @GetMapping("/sure")
@@ -91,12 +84,13 @@ public class GameController {
         if (gameService.right(answer, rightAnswer)) {
             counter++;
             return "good";
-        }else {
+        } else {
             counter--;
-            if (counter == 0){
+            if (counter == 0) {
                 return "lost";
             }
-        }return "secondw";
+        }
+        return "secondw";
     }
 
 
@@ -111,24 +105,26 @@ public class GameController {
             if (counter == 0) {
                 return "lost";
             }
-        }return "wrong";
+        }
+        return "wrong";
     }
 
     @GetMapping("/lifebuoy")
-    public String getLife(ModelMap modelMap){
+    public String getLife(ModelMap modelMap) {
         String rightAnswer = generator.getRightAnswer();
         String wrongAnswer2 = generator.getWrongAnswer2();
         modelMap.put("lifebuoy", gameService.getLifebuoy());
         modelMap.put("rightAnswer", rightAnswer);
         modelMap.put("wrongAnswer2", wrongAnswer2);
-        if (gameService.getLife()){
+        if (gameService.getLife()) {
             return "lifebuoy";
-        }else {
+        } else {
             counter--;
-            if (counter == 0){
+            if (counter == 0) {
                 return "lost";
             }
-        }return "nobuoys";
+        }
+        return "nobuoys";
     }
 }
 

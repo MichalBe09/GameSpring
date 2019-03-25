@@ -18,46 +18,24 @@ public class GameService {
     }
 
 
-    public boolean rightMod (String answer, String rightAnswer, int r) {
+    public boolean rightMod(String answer, String rightAnswer, int r) {
         if (answer.equals(rightAnswer) && r % 7 == 0) {
             return true;
         } else return false;
     }
 
-    public boolean wrongMod (String answer, String rightAnswer, int r) {
+    public boolean wrongMod(String answer, String rightAnswer, int r) {
         if (!answer.equals(rightAnswer) && r % 7 == 0) {
             return true;
         } else return false;
 
     }
 
-    public boolean getLife(){
-        if (lifebuoy < 3){
+    public boolean getLife() {
+        if (lifebuoy < 3) {
             lifebuoy++;
             return true;
-        }else return false;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public void setCounter(int counter) {
-        this.counter = counter;
+        } else return false;
     }
 
     public int getLifebuoy() {
